@@ -1,13 +1,11 @@
 // ================================================================
 // DATABASE - 2800 STUDENTS (Classes 3-9)
 // ================================================================
-// Initialize Lenis
 const lenis = new Lenis({
   autoRaf: true,
   duration: 2, // Scroll speed (in seconds)
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth easing function
 });
-
 
 
 const studentDB = {};
@@ -2407,6 +2405,204 @@ console.log('📱 Responsive Design: ENABLED');
 console.log('🌓 Dark Theme Support: YES');
 console.log('════════════════════════════════════════════════════════════');
 console.log('🚀 READY TO USE! Login with any student ID or T001/teacher123');
-
 console.log('════════════════════════════════════════════════════════════');
+// Add this anywhere in your script.js
+function toggleTheme() {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    applyTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    showToast(`Switched to ${newTheme} theme`, 'success');
+}
 
+function applyTheme(theme) {
+    const body = document.body;
+    const themeIcon = document.querySelector('.theme-icon');
+    
+    if (theme === 'dark') {
+        body.classList.add('dark-theme');
+        if (themeIcon) themeIcon.className = 'fas fa-sun theme-icon';
+    } else {
+        body.classList.remove('dark-theme');
+        if (themeIcon) themeIcon.className = 'fas fa-moon theme-icon';
+    }
+}
+// ============================================================
+// ADD THESE FUNCTIONS TO YOUR ORIGINAL script.js FILE
+// ============================================================
+
+// *** ADD THIS AFTER LINE 200 (after cookie functions) ***
+let eventRegistrations = loadFromCookie('eventRegistrations') || {};
+
+// *** ADD THESE 2 FUNCTIONS ANYWHERE IN YOUR SCRIPT ***
+function toggleTheme() {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    applyTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    showToast(`Switched to ${newTheme} theme`, 'success');
+}
+
+function applyTheme(theme) {
+    const body = document.body;
+    const themeIcon = document.querySelector('.theme-icon');
+    
+    if (theme === 'dark') {
+        body.classList.add('dark-theme');
+        if (themeIcon) {
+            themeIcon.className = 'fas fa-sun theme-icon';
+        }
+    } else {
+        body.classList.remove('dark-theme');
+        if (themeIcon) {
+            themeIcon.className = 'fas fa-moon theme-icon';
+        }
+    }
+}
+
+// *** REPLACE YOUR loadHomework() function with this ***
+function loadHomework() {
+    // RELOAD from cookie each time
+    homeworkDB = loadFromCookie('homeworkDB') || [];
+    
+    const hw = homeworkDB.filter(h => h.class === currentUser.class);
+    let html = `
+                <div class="page-header">
+                    <div class="page-header-content">
+                        <div>
+                            <h1 class="page-title"><i class="fas fa-clipboard-list"></i> My Homework</h1>
+                            <p style="font-size: 0.85rem;">View assigned homework</p>
+                        </div>
+                        <button class="btn-back" onclick="backToDashboard()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
+                <div class="page-content">
+            `;
+
+    if (hw.length === 0) {
+        html += `
+                    <div class="card" style="text-align: center; padding: 3rem;">
+                        <i class="fas fa-clipboard-check" style="font-size: 4rem; color: var(--success); margin-bottom: 1rem;"></i>
+                        <h3>No homework assigned yet!</h3>
+                        <p style="color: var(--text-light); margin-top: 0.5rem;">Check back later for new assignments</p>
+                    </div>
+                `;
+    } else {
+        hw.forEach((h, idx) => {
+            html += `
+                        <div class="card" style="animation: fadeInUp 0.5s ease-out ${idx * 0.1}s backwards;">
+                            <div style="display: flex; justify-content: space-between; align-items: start;">
+                                <div style="flex: 1;">
+                                    <span class="badge badge-primary">${h.subject}</span>
+                                    <h3 style="margin: 0.5rem 0;">Homework #${idx + 1}</h3>
+                                    <p style="margin: 0.7rem 0; line-height: 1.6;">${h.task}</p>
+                                    <div style="display: flex; gap: 1rem; font-size: 0.8rem; color: var(--text-light); margin-top: 1rem;">
+                                        <div><i class="fas fa-calendar"></i> Due: ${h.date}</div>
+                                        <div><i class="fas fa-user"></i> Assigned by: ${h.by}</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-success btn-small" onclick="showToast('Homework marked as complete!', 'success')">
+                                    <i class="fas fa-check"></i> Mark Complete
+                                </button>
+                            </div>
+                        </div>
+                    `;
+        });
+    }
+
+    html += `</div>`;
+    document.getElementById('homeworkPage').innerHTML = html;
+    console.log('📚 Homework loaded:', hw.length);
+}
+
+// *** ADD THIS NEW FUNCTION FOR EVENT REGISTRATION ***
+function registerForEvent(eventId) {
+    if (!currentUser) {
+        showToast('Please login to register!', 'error');
+        return;
+    }
+
+    if (!eventRegistrations[currentUser.id]) {
+        eventRegistrations[currentUser.id] = [];
+    }
+
+    if (eventRegistrations[currentUser.id].includes(eventId)) {
+        showToast('You are already registered for this event!', 'info');
+        return;
+    }
+
+    eventRegistrations[currentUser.id].push(eventId);
+    
+    const event = eventsDB.find(e => e.id === eventId);
+    if (event) {
+        event.registered++;
+    }
+
+    saveToCookie('eventRegistrations', eventRegistrations);
+    saveToCookie('eventsDB', eventsDB);
+
+    showToast('Successfully registered for the event!', 'success');
+    loadEvents();
+}
+
+// *** REPLACE YOUR loadEvents() function with this ***
+function loadEvents() {
+    eventsDB = loadFromCookie('eventsDB') || eventsDB;
+    eventRegistrations = loadFromCookie('eventRegistrations') || {};
+    
+    const userRegistrations = eventRegistrations[currentUser?.id] || [];
+    
+    let html = `
+                <div class="page-header">
+                    <div class="page-header-content">
+                        <div>
+                            <h1 class="page-title"><i class="fas fa-calendar-alt"></i> School Events</h1>
+                            <p style="font-size: 0.85rem;">Upcoming events and activities</p>
+                        </div>
+                        <button class="btn-back" onclick="backToDashboard()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
+                <div class="page-content">
+            `;
+
+    eventsDB.forEach((event, idx) => {
+        const isRegistered = userRegistrations.includes(event.id);
+        
+        html += `
+                    <div class="card" style="animation: fadeInUp 0.5s ease-out ${idx * 0.1}s backwards;">
+                        <div style="display: flex; gap: 1.5rem;">
+                            <div style="min-width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white;">
+                                <div style="font-size: 1.8rem; font-weight: 900;">${new Date(event.date).getDate()}</div>
+                                <div style="font-size: 0.8rem; text-transform: uppercase;">${new Date(event.date).toLocaleString('default', { month: 'short' })}</div>
+                            </div>
+                            <div style="flex: 1;">
+                                <h3>${event.name}</h3>
+                                <p style="margin: 0.5rem 0; color: var(--text-light);">${event.description}</p>
+                                <div style="display: flex; gap: 1rem; margin-top: 0.7rem; font-size: 0.85rem;">
+                                    <div><i class="fas fa-clock"></i> ${event.time}</div>
+                                    <div><i class="fas fa-map-marker-alt"></i> ${event.venue}</div>
+                                    <div><i class="fas fa-users"></i> ${event.registered} Registered</div>
+                                </div>
+                                ${isRegistered ? `
+                                    <button class="btn btn-success btn-small" style="margin-top: 0.7rem; cursor: default; opacity: 0.8;" disabled>
+                                        <i class="fas fa-check-circle"></i> Registered
+                                    </button>
+                                ` : `
+                                    <button class="btn btn-primary btn-small" style="margin-top: 0.7rem;" onclick="registerForEvent(${event.id})">
+                                        <i class="fas fa-user-plus"></i> Register
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                `;
+    });
+
+    html += `</div>`;
+    document.getElementById('eventsPage').innerHTML = html;
+    console.log('🎉 Events loaded:', eventsDB.length);
+          }
