@@ -4,7 +4,7 @@
 // Initialize Lenis
 const lenis = new Lenis({
   autoRaf: true,
-  duration: 1.25, // Scroll speed (in seconds)
+  duration: 2, // Scroll speed (in seconds)
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth easing function
 });
 
@@ -2409,3 +2409,4 @@ console.log('══════════════════════�
 console.log('🚀 READY TO USE! Login with any student ID or T001/teacher123');
 
 console.log('════════════════════════════════════════════════════════════');
+
