@@ -1,6 +1,14 @@
 // ================================================================
 // DATABASE - 2800 STUDENTS (Classes 3-9)
 // ================================================================
+// Initialize Lenis
+const lenis = new Lenis({
+  autoRaf: true,
+  duration: 1.25, // Scroll speed (in seconds)
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth easing function
+});
+
+
 
 const studentDB = {};
 const teacherDB = {
@@ -2399,4 +2407,5 @@ console.log('📱 Responsive Design: ENABLED');
 console.log('🌓 Dark Theme Support: YES');
 console.log('════════════════════════════════════════════════════════════');
 console.log('🚀 READY TO USE! Login with any student ID or T001/teacher123');
+
 console.log('════════════════════════════════════════════════════════════');
