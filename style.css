@@ -1646,7 +1646,7 @@ body.dark-theme .modal-content h2 {
 /* YouTube Button Container */
 .youtube-button {
     position: fixed;
-    right: 25px;
+    right: 23px;
     bottom: 160px;
     width: 70px;
     height: 70px;
@@ -1710,7 +1710,7 @@ body.dark-theme .modal-content h2 {
 /* Responsive - Mobile */
 @media (max-width: 768px) {
     .youtube-button {
-        right: 25px;
+        right: 23px;
         bottom: 160px;
         width: 60px;
         height: 60px;
@@ -1732,7 +1732,7 @@ body.dark-theme .modal-content h2 {
 
 @media (max-width: 480px) {
     .youtube-button {
-        right: 25px;
+        right: 23px;
         bottom: 160px;
         width: 60px;
         height: 60px;
@@ -1761,6 +1761,7 @@ body.dark-theme .youtube-button {
 body.dark-theme .youtube-button:hover {
     box-shadow: 0 12px 40px rgba(255, 0, 0, 0.7);
 }
+
 
 
 
