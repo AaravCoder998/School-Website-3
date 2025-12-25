@@ -1646,8 +1646,8 @@ body.dark-theme .modal-content h2 {
 /* YouTube Button Container */
 .youtube-button {
     position: fixed;
-    left: 20px;
-    bottom: 20px;
+    right: 20px;
+    bottom: 40px;
     width: 60px;
     height: 60px;
     background: linear-gradient(135deg, #FF0000, #CC0000);
@@ -1689,29 +1689,10 @@ body.dark-theme .modal-content h2 {
     pointer-events: none;
 }
 
-/* Hover Effect - Expand and Show Text */
-.youtube-button:hover {
-    width: 200px;
-    border-radius: 30px;
-    box-shadow: 0 12px 40px rgba(255, 0, 0, 0.6);
-    transform: translateY(-5px);
-    animation: none;
-}
-
-.youtube-button:hover .youtube-icon {
-    transform: scale(1.2) rotate(10deg);
-}
-
-.youtube-button:hover .youtube-text {
-    opacity: 1;
-    transform: translateX(0);
-}
+/* Hover Effect - Expand and Show Text 
 
 /* Active/Click Effect */
-.youtube-button:active {
-    transform: translateY(-2px) scale(0.95);
-    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.5);
-}
+
 
 /* Pulse Animation */
 @keyframes youtube-pulse {
@@ -1724,33 +1705,12 @@ body.dark-theme .modal-content h2 {
 }
 
 /* Shine Effect on Hover */
-.youtube-button::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-        45deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent
-    );
-    transform: rotate(45deg);
-    transition: all 0.6s ease;
-    opacity: 0;
-}
 
-.youtube-button:hover::before {
-    opacity: 1;
-    left: 100%;
-}
 
 /* Responsive - Mobile */
 @media (max-width: 768px) {
     .youtube-button {
-        left: 15px;
+        right: 20px;
         bottom: 90px;
         width: 50px;
         height: 50px;
@@ -1772,7 +1732,7 @@ body.dark-theme .modal-content h2 {
 
 @media (max-width: 480px) {
     .youtube-button {
-        left: 10px;
+        right: 20px;
         bottom: 80px;
         width: 45px;
         height: 45px;
@@ -1801,3 +1761,4 @@ body.dark-theme .youtube-button {
 body.dark-theme .youtube-button:hover {
     box-shadow: 0 12px 40px rgba(255, 0, 0, 0.7);
 }
+
