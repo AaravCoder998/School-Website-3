@@ -1647,7 +1647,7 @@ body.dark-theme .modal-content h2 {
 .youtube-button {
     position: fixed;
     right: 25px;
-    bottom: 150px;
+    bottom: 170px;
     width: 60px;
     height: 60px;
     background: linear-gradient(135deg, #FF0000, #CC0000);
@@ -1711,7 +1711,7 @@ body.dark-theme .modal-content h2 {
 @media (max-width: 768px) {
     .youtube-button {
         right: 25px;
-        bottom: 150px;
+        bottom: 170px;
         width: 50px;
         height: 50px;
     }
@@ -1733,7 +1733,7 @@ body.dark-theme .modal-content h2 {
 @media (max-width: 480px) {
     .youtube-button {
         right: 25px;
-        bottom: 150px;
+        bottom: 170px;
         width: 50px;
         height: 50px;
     }
@@ -1761,6 +1761,7 @@ body.dark-theme .youtube-button {
 body.dark-theme .youtube-button:hover {
     box-shadow: 0 12px 40px rgba(255, 0, 0, 0.7);
 }
+
 
 
 
