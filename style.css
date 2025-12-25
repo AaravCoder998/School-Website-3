@@ -1733,7 +1733,7 @@ body.dark-theme .modal-content h2 {
 @media (max-width: 480px) {
     .youtube-button {
         right: 20px;
-        bottom: 80px;
+        bottom: 120px;
         width: 45px;
         height: 45px;
     }
@@ -1761,4 +1761,5 @@ body.dark-theme .youtube-button {
 body.dark-theme .youtube-button:hover {
     box-shadow: 0 12px 40px rgba(255, 0, 0, 0.7);
 }
+
 
