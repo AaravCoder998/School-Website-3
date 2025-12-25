@@ -2685,47 +2685,4 @@ function loadEDiary() {
     document.getElementById('eDiaryPage').innerHTML = html;
     console.log('📖 E-Diary loaded for Class', currentUser.class);
 }
-let currentQuestions = [];
-let scrollCount = 0;
-let captchaAnswer = 0;
 
-// ================================================================
-// CAPTCHA FUNCTIONS
-// ================================================================
-
-function generateCaptcha() {
-    const num1 = Math.floor(Math.random() * 10) + 1;
-    const num2 = Math.floor(Math.random() * 10) + 1;
-    const operators = ['+', '-', 'Ã—'];
-    const operator = operators[Math.floor(Math.random() * operators.length)];
-    
-    let question = '';
-    let answer = 0;
-    
-    switch(operator) {
-        case '+':
-            question = `${num1} + ${num2} = ?`;
-            answer = num1 + num2;
-            break;
-        case '-':
-            const larger = Math.max(num1, num2);
-            const smaller = Math.min(num1, num2);
-            question = `${larger} - ${smaller} = ?`;
-            answer = larger - smaller;
-            break;
-        case 'Ã—':
-            const small1 = Math.floor(Math.random() * 5) + 1;
-            const small2 = Math.floor(Math.random() * 5) + 1;
-            question = `${small1} Ã— ${small2} = ?`;
-            answer = small1 * small2;
-            break;
-    }
-    
-    captchaAnswer = answer;
-    document.getElementById('captchaQuestion').textContent = question;
-    document.getElementById('captchaInput').value = '';
-    
-    console.log('ðŸ"' Captcha generated:', question, 'Answer:', answer);
-}
-
-// Load student database from cookies if exists
