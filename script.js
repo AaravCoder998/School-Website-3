@@ -1,13 +1,3 @@
-// ================================================================
-// DATABASE - 2800 STUDENTS (Classes 3-9)
-// ================================================================
-const lenis = new Lenis({
-  autoRaf: true,
-  duration: 2, // Scroll speed (in seconds)
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth easing function
-});
-
-
 const studentDB = {};
 const teacherDB = {
     'T001': {
@@ -567,6 +557,7 @@ function selectUserType(type) {
 
 function handleLogin(e) {
     e.preventDefault();
+    
     const userId = document.getElementById('userId').value.trim();
     const password = document.getElementById('password').value;
 
@@ -677,7 +668,8 @@ function openPage(page) {
         'viewReports': loadViewReports,
         'teacherProfile': loadTeacherProfile,
         'library': loadGenericPage,
-        'feePayment': loadGenericPage
+        'feePayment': loadGenericPage,
+        'eDiary': loadEDiary,
     };
 
     if (pageLoaders[page]) {
@@ -2605,4 +2597,91 @@ function loadEvents() {
     html += `</div>`;
     document.getElementById('eventsPage').innerHTML = html;
     console.log('🎉 Events loaded:', eventsDB.length);
-          }
+}
+// ================================================================
+// E-DIARY FUNCTION
+// ================================================================
+
+function loadEDiary() {
+    // Get student's class number (e.g., "3-A" → "3")
+    const classNum = parseInt(currentUser.class.split('-')[0]);
+    
+    // Determine which diary type based on class
+    let diaryType, diaryIcon, diaryColor, diaryDescription;
+    
+    if (classNum >= 3 && classNum <= 5) {
+        // Classes 3-5: Primary School Diary
+        diaryType = 'Primary School E-Diary';
+        diaryIcon = 'child';
+        diaryColor = 'linear-gradient(135deg, #43e97b, #38f9d7)';
+        diaryDescription = 'Digital diary for Classes 3-5';
+    } else if (classNum >= 6 && classNum <= 9) {
+        // Classes 6-9: Senior School E-Diary
+        diaryType = 'Senior School E-Diary';
+        diaryIcon = 'graduation-cap';
+        diaryColor = 'linear-gradient(135deg, #667eea, #764ba2)';
+        diaryDescription = 'Digital diary for Classes 6-9';
+    } else {
+        // Fallback
+        diaryType = 'School E-Diary';
+        diaryIcon = 'book-open';
+        diaryColor = 'linear-gradient(135deg, #f093fb, #f5576c)';
+        diaryDescription = 'Digital school diary';
+    }
+
+    const html = `
+        <div class="page-header">
+            <div class="page-header-content">
+                <div>
+                    <h1 class="page-title"><i class="fas fa-book-open"></i> E-Diary</h1>
+                    <p style="font-size: 0.85rem;">${diaryDescription}</p>
+                </div>
+                <button class="btn-back" onclick="backToDashboard()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="card" style="text-align: center; padding: 3rem;">
+                <div style="width: 120px; height: 120px; margin: 0 auto 1.5rem; border-radius: 50%; background: ${diaryColor}; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-${diaryIcon}" style="font-size: 4rem; color: white;"></i>
+                </div>
+                <h2>${diaryType}</h2>
+                <p style="margin-top: 0.5rem; color: var(--text-light); font-size: 1rem;">
+                    <strong>Class ${currentUser.class}</strong>
+                </p>
+                <p style="margin-top: 1rem; padding: 2rem; background: rgba(102,126,234,0.1); border-radius: 15px; max-width: 500px; margin-left: auto; margin-right: auto;">
+                    <i class="fas fa-info-circle"></i> This feature is coming soon! Stay tuned for updates.
+                </p>
+                <button class="btn btn-primary" style="margin-top: 1.5rem; width: auto;" onclick="showToast('You will be notified when E-Diary is available!', 'info')">
+                    <i class="fas fa-bell"></i> Notify Me
+                </button>
+            </div>
+            
+            <div class="card">
+                <h3><i class="fas fa-info-circle"></i> About E-Diary</h3>
+                <div style="padding: 1rem;">
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--primary);">
+                        <strong><i class="fas fa-check-circle" style="color: var(--success);"></i> Daily Updates</strong>
+                        <p style="margin-top: 0.3rem; color: var(--text-light); font-size: 0.85rem;">View daily homework, announcements, and class activities</p>
+                    </div>
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--success);">
+                        <strong><i class="fas fa-check-circle" style="color: var(--success);"></i> Teacher Notes</strong>
+                        <p style="margin-top: 0.3rem; color: var(--text-light); font-size: 0.85rem;">Read important messages from your teachers</p>
+                    </div>
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--info);">
+                        <strong><i class="fas fa-check-circle" style="color: var(--success);"></i> Parent Communication</strong>
+                        <p style="margin-top: 0.3rem; color: var(--text-light); font-size: 0.85rem;">Digital communication between school and parents</p>
+                    </div>
+                    <div style="padding: 1rem; background: var(--bg-light); border-radius: 10px; border-left: 4px solid var(--warning);">
+                        <strong><i class="fas fa-check-circle" style="color: var(--success);"></i> Attendance Records</strong>
+                        <p style="margin-top: 0.3rem; color: var(--text-light); font-size: 0.85rem;">Track your daily attendance and leaves</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('eDiaryPage').innerHTML = html;
+    console.log('📖 E-Diary loaded for Class', currentUser.class);
+}
