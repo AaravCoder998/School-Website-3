@@ -1725,9 +1725,8 @@ body.dark-theme .modal-content h2 {
         left: 60px;
     }
     
-    .youtube-button:hover {
-        width: 170px;
-    }
+   
+    
 }
 
 @media (max-width: 480px) {
@@ -1748,9 +1747,7 @@ body.dark-theme .modal-content h2 {
         letter-spacing: 1px;
     }
     
-    .youtube-button:hover {
-        width: 150px;
-    }
+    
 }
 
 /* Dark Theme Compatibility */
@@ -1761,6 +1758,7 @@ body.dark-theme .youtube-button {
 body.dark-theme .youtube-button:hover {
     box-shadow: 0 12px 40px rgba(255, 0, 0, 0.7);
 }
+
 
 
 
