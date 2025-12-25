@@ -16,25 +16,12 @@
     <!-- TOAST CONTAINER -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- SEARCH OVERLAY -->
-    <div class="search-overlay" id="searchOverlay">
-        <i class="fas fa-times search-close" onclick="closeSearch()"></i>
-        <div class="search-container">
-            <input type="text" class="search-box" id="globalSearchInput" placeholder="Search anything... (Press Ctrl+K)" onkeyup="handleGlobalSearch(event)" autocomplete="off">
-            <div class="search-results" id="searchResults"></div>
-        </div>
-    </div>
-
     <!-- KEYBOARD SHORTCUTS OVERLAY -->
     <div class="shortcuts-overlay" id="shortcutsOverlay">
         <div class="shortcuts-content">
             <h2 style="margin-bottom: 1.5rem;">
                 <i class="fas fa-keyboard"></i> Keyboard Shortcuts
             </h2>
-            <div class="shortcut-item">
-                <span><i class="fas fa-search"></i> Open Search</span>
-                <span class="shortcut-key">Ctrl + K</span>
-            </div>
             <div class="shortcut-item">
                 <span><i class="fas fa-question-circle"></i> View Shortcuts</span>
                 <span class="shortcut-key">?</span>
@@ -74,18 +61,36 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- YOUTUBE BUTTON -->
-    <a href="https://www.youtube.com/@chinmayavidyalayabokaro9965" target="_blank" class="youtube-button" title="Visit our YouTube Channel">
-        <i class="fab fa-youtube youtube-icon"></i>
-        <span class="youtube-text">YOUTUBE</span>
-    </a>
+    <!-- QUICK ACCESS MENU (Desktop Only - NO SEARCH, NO DOWNLOAD) -->
+    <div class="quick-access" id="quickAccess">
+        <button class="quick-btn" onclick="openShortcuts()" title="Shortcuts">
+            <i class="fas fa-keyboard"></i>
+            <span class="quick-btn-tooltip">Shortcuts (?)</span>
+        </button>
+        <button class="quick-btn" onclick="printPage()" title="Print">
+            <i class="fas fa-print"></i>
+            <span class="quick-btn-tooltip">Print</span>
+        </button>
+        <button class="quick-btn" onclick="refreshData()" title="Refresh">
+            <i class="fas fa-sync-alt"></i>
+            <span class="quick-btn-tooltip">Refresh Data</span>
+        </button>
+    </div>
 
-    <!-- THEME TOGGLE BUTTON -->
+    <!-- SINGLE THEME TOGGLE BUTTON -->
     <div class="theme-toggle-container">
         <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
             <i class="fas fa-moon theme-icon"></i>
         </button>
     </div>
+    <!-- YOUTUBE BUTTON -->
+<a href="https://www.youtube.com/@chinmayavidyalayabokaro9965" 
+   target="_blank" 
+   class="youtube-button" 
+   title="Visit Chinmaya Vidyalaya Bokaro YouTube Channel">
+    <i class="fab fa-youtube youtube-icon"></i>
+    <span class="youtube-text">YOUTUBE</span>
+</a>
 
     <!-- LOGIN PAGE -->
     <div id="loginPage" class="login-container">
@@ -116,7 +121,7 @@
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label><i class="fas fa-id-card"></i> User ID</label>
-                    <input type="text" id="userId" placeholder="Enter ID (e.g., 3A001 or T001)" required autocomplete="username">
+                    <input type="text" id="userId" placeholder="Enter ID" required autocomplete="username">
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-lock"></i> Password</label>
@@ -129,11 +134,7 @@
             
             <div id="loginAlert" class="hidden"></div>
             
-            <div style="margin-top: 1.5rem; text-align: center; font-size: 0.8rem; color: var(--text-light);">
-                <p><strong>Quick Login:</strong></p>
-                <p>Student: Any ID like 3A001 (password same as ID)</p>
-                <p>Teacher: T001 / teacher123</p>
-            </div>
+            
         </div>
     </div>
 
@@ -265,6 +266,13 @@
                     <h3>My Profile</h3>
                     <p>Personal details</p>
                 </div>
+                <div class="menu-card" onclick="openPage('eDiary')">
+    <div class="menu-card-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+        <i class="fas fa-book-open"></i>
+    </div>
+    <h3>E-Diary</h3>
+    <p>Digital school diary</p>
+</div>
             </div>
         </div>
     </div>
@@ -377,7 +385,7 @@
         </div>
     </div>
 
-    <!-- ALL PAGE CONTAINERS (These were MISSING!) -->
+    <!-- ALL PAGE CONTAINERS -->
     <div id="myTimetablePage" class="full-page"></div>
     <div id="markAttendancePage" class="full-page"></div>
     <div id="timetablePage" class="full-page"></div>
@@ -399,8 +407,9 @@
     <div id="viewReportsPage" class="full-page"></div>
     <div id="teacherProfilePage" class="full-page"></div>
     <div id="importStudentsPage" class="full-page"></div>
+    <div id="eDiaryPage" class="full-page"></div>
 
-    <!-- CHANGE PASSWORD MODAL (This was MISSING!) -->
+    <!-- CHANGE PASSWORD MODAL -->
     <div id="changePasswordModal" class="modal">
         <div class="modal-content">
             <h2 style="margin-bottom: 1.3rem;">
