@@ -1646,10 +1646,10 @@ body.dark-theme .modal-content h2 {
 /* YouTube Button Container */
 .youtube-button {
     position: fixed;
-    right: 23px;
-    bottom: 160px;
-    width: 70px;
-    height: 70px;
+    right: 20px;
+    bottom: 100px;
+    width: 65px;
+    height: 65px;
     background: linear-gradient(135deg, #FF0000, #CC0000);
     border-radius: 50%;
     display: flex;
@@ -1758,6 +1758,7 @@ body.dark-theme .youtube-button {
 body.dark-theme .youtube-button:hover {
     box-shadow: 0 12px 40px rgba(255, 0, 0, 0.7);
 }
+
 
 
 
